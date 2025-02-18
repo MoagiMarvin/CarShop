@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:CarShop.ViewModels"
+             x:Class="CarShop.Views.CartPage"
+             Title="Shopping Cart">
+
+    <Grid RowDefinitions="*,Auto" Padding="20">
+        <RefreshView Command="{Binding LoadCartCommand}"
+                     IsRefreshing="{Binding IsBusy}">
+            <CollectionView ItemsSource="{Binding CartItems}">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout>
+                        <Label Text="Your cart is empty"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Delete"
+                                              BackgroundColor="Red"
+                                              Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CartViewModel}}, Path=RemoveFromCartCommand}"
+                                              CommandParameter="{Binding .}"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Frame Margin="0,5" Padding="10">
+                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                    <Image Source="{Binding Car.ImageUrl}"
+                                           HeightRequest="60"
+                                           WidthRequest="60"
+                                           Aspect="AspectFit"/>
+
+                                    <VerticalStackLayout Grid.Column="1" 
+                                                       Padding="10,0">
+                                        <Label Text="{Binding Car.Make}" 
+                                               FontAttributes="Bold"/>
+                                        <Label Text="{Binding Car.Model}"/>
+                                        <Label Text="{Binding PriceAtTime, StringFormat='${0:N2}'}"/>
+
+                                        <Stepper Value="{Binding Quantity}"
+                                                 Minimum="1"/>
+
+                                        <Label Text="{Binding Quantity, StringFormat='Quantity: {0}'}"/>
+                                    </VerticalStackLayout>
+
+                                    <Label Grid.Column="2"
+                                           Text="{Binding SubTotal, StringFormat='${0:N2}'}"
+                                           VerticalOptions="Center"/>
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <VerticalStackLayout Grid.Row="1" Spacing="10">
+            <Label Text="{Binding StatusMessage}"
+                   TextColor="{AppThemeBinding Light=Blue, Dark=LightBlue}"
+                   HorizontalOptions="Center"/>
+
+            <Label Text="{Binding TotalAmount, StringFormat='Total: ${0:N2}'}"
+                   FontAttributes="Bold"
+                   FontSize="Large"
+                   HorizontalOptions="Center"/>
+
+            <Button Text="Clear Cart"
+                    Command="{Binding ClearCartCommand}"
+                    BackgroundColor="Red"
+                    TextColor="White"/>
+
+            <Button Text="Checkout"
+                    Command="{Binding CheckoutCommand}"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
