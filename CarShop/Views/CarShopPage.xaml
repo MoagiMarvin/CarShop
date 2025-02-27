@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:CarShop.Converters"
+             xmlns:viewmodels="clr-namespace:CarShop.ViewModels"
              x:Class="CarShop.Views.CarShopPage"
              Title="Car Shop">
-
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:NotNullConverter x:Key="NotNullConverter"/>
@@ -13,25 +13,27 @@
     <Grid RowDefinitions="Auto,*,Auto" 
           ColumnDefinitions="*,Auto"
           Padding="20">
-
         <SearchBar Grid.ColumnSpan="2"
                    Placeholder="Search cars..."/>
-
         <RefreshView Grid.Row="1" 
                     Grid.ColumnSpan="2"
                     Command="{Binding LoadCarsCommand}"
                     IsRefreshing="{Binding IsBusy}">
             <CollectionView ItemsSource="{Binding Cars}"
-                          SelectedItem="{Binding SelectedCar}">
+                          SelectedItem="{Binding SelectedCar, Mode=TwoWay}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame Margin="0,5" Padding="10">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CarShopViewModel}}, Path=SelectCarCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
                             <Grid ColumnDefinitions="Auto,*,Auto">
                                 <Image Source="{Binding ImageUrl}"
                                        HeightRequest="60"
                                        WidthRequest="60"
                                        Aspect="AspectFit"/>
-
                                 <VerticalStackLayout Grid.Column="1" 
                                                    Padding="10,0">
                                     <Label Text="{Binding Make}" 
@@ -47,20 +49,16 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
-
         <VerticalStackLayout Grid.Row="2" 
                             Grid.Column="0"
                             Spacing="10">
             <Label Text="{Binding StatusMessage}"
                    TextColor="{AppThemeBinding Light=Blue, Dark=LightBlue}"/>
-
             <Stepper Value="{Binding Quantity}"
                      Minimum="1"
                      Maximum="{Binding SelectedCar.StockQuantity}"/>
-
             <Label Text="{Binding Quantity, StringFormat='Quantity: {0}'}"/>
         </VerticalStackLayout>
-
         <Button Grid.Row="2" 
                 Grid.Column="1"
                 Text="Add to Cart"

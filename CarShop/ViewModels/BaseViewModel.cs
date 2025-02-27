@@ -26,9 +26,17 @@ namespace CarShop.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        // In BaseViewModel.cs
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            try
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in OnPropertyChanged: {ex.Message}");
+            }
         }
 
         protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)

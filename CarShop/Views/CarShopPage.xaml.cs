@@ -6,6 +6,8 @@ public partial class CarShopPage : ContentPage
 {
     private readonly CarShopViewModel _viewModel;
 
+   
+
     public CarShopPage(CarShopViewModel viewModel)
     {
         try
@@ -22,5 +24,11 @@ public partial class CarShopPage : ContentPage
             System.Diagnostics.Debug.WriteLine($"Error in CarShopPage constructor: {ex.Message}");
             System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
         }
+
+    }
+    private void OnAddToCartClicked(object sender, EventArgs e)
+    {
+        System.Diagnostics.Debug.WriteLine("Add to cart button clicked");
     }
 }
+
