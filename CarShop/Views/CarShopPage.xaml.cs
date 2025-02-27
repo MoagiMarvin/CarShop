@@ -1,3 +1,4 @@
+using CarShop.Model;
 using CarShop.ViewModels;
 
 namespace CarShop.Views;
@@ -29,6 +30,15 @@ public partial class CarShopPage : ContentPage
     private void OnAddToCartClicked(object sender, EventArgs e)
     {
         System.Diagnostics.Debug.WriteLine("Add to cart button clicked");
+    }
+    private void OnCarSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection.FirstOrDefault() is Car selectedCar)
+        {
+            System.Diagnostics.Debug.WriteLine($"Car selected: {selectedCar.Make} {selectedCar.Model}");
+            // This forces the binding to update
+            ((CarShopViewModel)BindingContext).SelectedCar = selectedCar;
+        }
     }
 }
 
