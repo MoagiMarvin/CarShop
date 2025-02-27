@@ -12,13 +12,22 @@ namespace CarShop.ViewModels
         private Car _selectedCar;
         private string _statusMessage;
         private int _quantity = 1;
+        private string _imageUrl;
 
         public ObservableCollection<Car> Cars
         {
             get => _cars;
             set => SetProperty(ref _cars, value);
         }
-
+        public string ImageUrl
+        {
+            get => _imageUrl;
+            set
+            {
+                _imageUrl = value;
+                OnPropertyChanged(nameof(ImageUrl));
+            }
+        }
         public Car SelectedCar
         {
             get => _selectedCar;

@@ -19,7 +19,7 @@ namespace CarShop
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
             // Get the database path
-            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "carshop.db");
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "carshops.db");
 
             // Create database context
             var databaseContext = new DatabaseContext(dbPath);

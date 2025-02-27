@@ -58,9 +58,41 @@ namespace CarShop.Data
                             Price = 28000,
                             StockQuantity = 3,
                             Description = "Popular compact SUV",
-                            ImageUrl = "crv.png"
+                            ImageUrl = "cvc.jpeg"
                         },
-                        // Add more seed data as needed
+                           new Car
+    {
+        Make = "Chevrolet",
+        Model = "Silverado",
+        Year = 2024,
+        Color = "White",
+        Price = 38000,
+        StockQuantity = 6,
+        Description = "Full-size pickup truck",
+        ImageUrl = "silverado.png"
+    },
+    new Car
+    {
+        Make = "BMW",
+        Model = "X5",
+        Year = 2024,
+        Color = "Gray",
+        Price = 62000,
+        StockQuantity = 2,
+        Description = "Luxury SUV with advanced features",
+        ImageUrl = "bmw_x5.png"
+    },
+    new Car
+    {
+        Make = "Audi",
+        Model = "A4",
+        Year = 2024,
+        Color = "Silver",
+        Price = 45000,
+        StockQuantity = 3,
+        Description = "Premium compact sedan",
+        ImageUrl = "audi_a4.png"
+    },
                     };
                     await _database.InsertAllAsync(cars);
                 }

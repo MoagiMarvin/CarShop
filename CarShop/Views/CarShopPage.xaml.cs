@@ -39,6 +39,8 @@ public partial class CarShopPage : ContentPage
             // This forces the binding to update
             ((CarShopViewModel)BindingContext).SelectedCar = selectedCar;
         }
-    }
+    } 
+
+    
 }
 
